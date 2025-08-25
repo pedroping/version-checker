@@ -36,7 +36,7 @@ export class VersionCheckService {
   }
 
   private initTimerCheck() {
-    timer(30000, 30000)
+    timer(120000, 120000)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.checkVersion(true, false));
   }
