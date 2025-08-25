@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
-import { VersionCheckService } from '../service/version-check.service';
+import { VersionCheckService } from './services/version-check.service';
 
 @Component({
   selector: 'app-root',
