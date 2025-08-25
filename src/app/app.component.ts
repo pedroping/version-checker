@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { timer } from 'rxjs';
+import { Subject } from 'rxjs';
+import { VersionCheckService } from '../service/version-check.service';
 
-function generateRandomString(): string {
-  return Math.random().toString(36).substring(2, 17);
-}
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,32 +12,11 @@ function generateRandomString(): string {
 })
 export class AppComponent implements OnInit {
   title = 'version-checker';
+  destroy$ = new Subject<void>();
+
+  versionCheckService = inject(VersionCheckService);
 
   ngOnInit() {
-    this.checkVersion(false, true);
-  }
-
-  checkVersion(fromTimer: boolean, fromStart: boolean) {
-    fetch('/versionId.txt?CacheBusting=' + generateRandomString())
-      .then((res) => res.text())
-      .then((id) => {
-        const currentVersion = localStorage.getItem('applicationVersion');
-
-        localStorage.setItem('applicationVersion', id);
-
-        if (!currentVersion || currentVersion == id) {
-          if (!fromTimer) this.initTimerCheck();
-          return;
-        }
-
-        if (fromStart) return window.location.reload();
-
-        if (confirm('New version available, reload now ?'))
-          window.location.reload();
-      });
-  }
-
-  initTimerCheck() {
-    timer(30000, 30000).subscribe(() => this.checkVersion(true, false));
+    this.versionCheckService.start();
   }
 }
