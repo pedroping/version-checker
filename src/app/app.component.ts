@@ -1,7 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Subject } from 'rxjs';
-import { VersionCheckService } from './services/version-check.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +8,6 @@ import { VersionCheckService } from './services/version-check.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'version-checker';
-  destroy$ = new Subject<void>();
-
-  versionCheckService = inject(VersionCheckService);
-
-  ngOnInit() {
-    this.versionCheckService.start();
-  }
 }

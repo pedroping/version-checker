@@ -9,7 +9,6 @@ export class VersionCheckService {
 
   start() {
     if (isDevMode()) return;
-
     this.checkVersion(false, true);
   }
 
